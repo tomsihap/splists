@@ -1,23 +1,5 @@
-- index.php
+<?php include('partials/_header.php'); ?>
 
-- views/
-        login.php
-        signup.php
-        board.php
-
-- controllers/
-        loginController.php
-        signupController.php
-        boardController.php
-        helper.php
-
-- partials/
-        _header.php
-        _footer.php
-        _form_ticket.php
-        _view_ticket.php
-
-- assets/
-        js/
-        css/
-        img/
+    <!-- CONTENU DE index.php, board.php, login.php, signup.php -->
+    
+<?php include('partials/_footer.php'); ?>
