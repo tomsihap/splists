@@ -49,9 +49,12 @@
         <?php
             if ( isset($_GET['list']) && intval($_GET['list'] > 0) ){
                 // Cas où j'ai un ID de liste
+
+                $liste = getList($_GET['list']);
+
                 ?>
                 
-                    <h1>Nom de ma liste</h1>
+                    <h1><?= $liste['title']; ?></h1>
 
                         <div class="accordion" id="accordionExample">
                             <div class="card">

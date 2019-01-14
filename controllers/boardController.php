@@ -1,8 +1,15 @@
 <?php
 require_once('helper.php');
 
+/**
+ * Initialisation de l'instance de base de données
+ */
 $bdd = dbConnect('splists', 'root', '', 3308);
 
+
+/**
+ * READ (tous les éléments): Lecture de toutes les listes dès que j'accède à board.php
+ */
 // Response de la BDD non traitée
 $res = $bdd->query('SELECT * FROM lists');
 
@@ -17,8 +24,9 @@ while($donnees = $res->fetch()) {
 
 $res->closeCursor();
 
+
 /**
- * Cas où je reçois une variable POST de _form_list.php : je créée une liste
+ * CREATE : Cas où je reçois une variable POST de _form_list.php : je créée une liste
  */
 if( !empty($_POST['list-title']) ) {
 
@@ -31,4 +39,26 @@ if( !empty($_POST['list-title']) ) {
     ]);
 
     Header('Location: /splists/views/board.php?list=' . $bdd->lastInsertId());
+}
+
+/**
+ * READ (1 élément) : Lecture d'une liste
+ */
+
+function getList($idList) {
+    $bdd = dbConnect('splists', 'root', '', 3308);
+
+    $request = 'SELECT *
+                FROM lists
+                WHERE id = ' . $idList;
+
+    $response = $bdd->query($request);
+
+    // Je m'attends à recevoir 1 seul élément, je ne fais pas de while (tant que...)
+    // car while (tant que...) me sert à dire : "tant qu'il y a des éléments qui vont dans $liste"
+    // or, je n'en ai qu'1 seul qui va dans liste !
+    // (voir "select * from lists" ci-dessus pour un cas avec while)
+    $liste = $response->fetch();
+
+    return $liste;
 }
