@@ -2,16 +2,17 @@
 require_once('helper.php');
 
 /**
- * Initialisation de l'instance de base de données
+ * Instanciation de base de données
  */
 $bdd = dbConnect('splists', 'root', '', 3308);
-
 
 /**
  * READ (tous les éléments): Lecture de toutes les listes dès que j'accède à board.php
  */
 // Response de la BDD non traitée
 $res = $bdd->query('SELECT * FROM lists');
+
+// Si je veux voir la dernière erreur en BDD : $bdd->errorinfo()
 
 // J'instancie mon tableau qui contiendra mes listes
 $lists = [];
@@ -61,4 +62,28 @@ function getList($idList) {
     $liste = $response->fetch();
 
     return $liste;
+}
+
+function getTasks($idList) {
+    $bdd = dbConnect('splists', 'root', '', 3308);
+
+    $request = 'SELECT *
+                FROM tasks
+                WHERE id_list = ' . $idList;
+
+    $response = $bdd->query($request);
+
+
+    // J'initialise un tableau de tâches vide
+    $tasks = [];
+
+    // Tant que j'ai des données reçues...
+    while ($donnees = $response->fetch()) {
+
+        // ... j'ajoute (en mettant des crochets au nom de l'array) dans le tableau $task
+        // ce que j'ai reçu dans $donnees
+        $tasks[] = $donnees;
+    }
+
+    return $tasks;
 }
